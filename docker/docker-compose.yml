@@ -1,0 +1,38 @@
+name: blissim
+services:
+  php:
+    build: .
+    command: sh -c "composer install --no-interaction --prefer-dist && php -S 0.0.0.0:8080 -t public"
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    env_file: ../.env
+    environment:
+      # dans le réseau Docker on parle à MySQL par son nom de service et son port interne
+      DB_HOST: db
+      DB_PORT: 3306
+    volumes:
+      - ..:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blissim
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+    ports:
+      - "${DB_PORT:-3308}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ../blissim.sql:/docker-entrypoint-initdb.d/blissim.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  db_data:

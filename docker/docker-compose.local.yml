@@ -1,0 +1,7 @@
+# Surcharge locale : ajoute .env.local (non commité) aux variables du conteneur php.
+# Les valeurs de .env.local l'emportent sur celles de .env.
+services:
+  php:
+    env_file:
+      - ../.env
+      - ../.env.local
