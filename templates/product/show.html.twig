@@ -1,0 +1,44 @@
+{# Variables attendues : product (Product), comments (list<Comment>), form (FormView) #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block body %}
+    <p><a href="{{ path('product_list') }}">← Tous les produits</a></p>
+
+    <article class="product">
+        <img src="{{ product.thumbnail }}" alt="{{ product.title }}">
+        <div>
+            <h1>{{ product.title }}</h1>
+            <p class="price">{{ product.price|number_format(2, ',', ' ') }} $</p>
+            <p>{{ product.description }}</p>
+        </div>
+    </article>
+
+    <section id="comments">
+        <h2>Commentaires ({{ comments|length }})</h2>
+
+        {% for comment in comments %}
+            <div class="comment">
+                <p class="comment-meta">
+                    <strong>{{ comment.author }}</strong>
+                    · {{ comment.createdAt|date('d/m/Y H:i') }}
+                    {% if comment.updatedAt %}(modifié){% endif %}
+                </p>
+                <p>{{ comment.content|nl2br }}</p>
+                <div class="comment-actions">
+                    <a href="{{ path('comment_edit', {id: comment.id}) }}">Modifier</a>
+                    <form method="post" action="{{ path('comment_delete', {id: comment.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-comment-' ~ comment.id) }}">
+                        <button type="submit" class="link-button">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p class="muted">Aucun commentaire pour le moment.</p>
+        {% endfor %}
+
+        <h3>Ajouter un commentaire</h3>
+        {% include 'comment/_form.html.twig' with {label: 'Publier'} %}
+    </section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{# Variables attendues : form (FormView), label (texte du bouton) #}
+{{ form_start(form, {attr: {class: 'comment-form'}}) }}
+    {{ form_row(form.author) }}
+    {{ form_row(form.content) }}
+    <button type="submit">{{ label }}</button>
+{{ form_end(form) }}

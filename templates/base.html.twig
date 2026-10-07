@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Blissim{% endblock %} — Blissim</title>
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+</head>
+<body>
+<header class="site-header">
+    <a href="{{ path('product_list') }}">Blissim</a>
+</header>
+<main class="container">
+    {% block body %}{% endblock %}
+</main>
+</body>
+</html>

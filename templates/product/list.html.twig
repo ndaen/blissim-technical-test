@@ -1,0 +1,19 @@
+{# Variables attendues : products (list<Product>) #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block body %}
+    <h1>Produits</h1>
+    <ul class="grid">
+        {% for product in products %}
+            <li class="card">
+                <a href="{{ path('product_show', {id: product.id}) }}">
+                    <img src="{{ product.thumbnail }}" alt="{{ product.title }}" loading="lazy">
+                    <h2>{{ product.title }}</h2>
+                    <p class="price">{{ product.price|number_format(2, ',', ' ') }} $</p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
