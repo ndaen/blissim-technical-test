@@ -32,3 +32,7 @@ services:
                 !php/const PDO::ATTR_DEFAULT_FETCH_MODE: !php/const PDO::FETCH_ASSOC
                 !php/const PDO::ATTR_EMULATE_PREPARES: false
                 !php/const PDO::ATTR_TIMEOUT: 3
+
+when@test:
+    services:
+        App\Tests\Support\FakeProductApi: ~
