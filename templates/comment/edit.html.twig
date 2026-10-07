@@ -1,0 +1,11 @@
+{# Variables attendues : comment (Comment), form (FormView) #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le commentaire{% endblock %}
+
+{% block body %}
+    <p><a href="{{ path('product_show', {id: comment.productId}) }}#comments">← Retour au produit</a></p>
+
+    <h1>Modifier le commentaire</h1>
+    {% include 'comment/_form.html.twig' with {label: 'Enregistrer'} %}
+{% endblock %}
